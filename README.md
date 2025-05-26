@@ -1,4 +1,4 @@
-# FastAPI & Keycloak & Vue integration
+# FastAPI & Keycloak & Vue integration Template
 
 ```plaintext
 project/
