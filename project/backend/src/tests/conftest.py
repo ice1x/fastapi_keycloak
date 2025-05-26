@@ -13,9 +13,17 @@ def mock_admin_user() -> dict:
     return {"username": "admin", "roles": ["admin"]}
 
 
-@pytest.fixture(autouse=True)
-def override_user_dependency(mock_admin_user: dict) -> None:
+@pytest.fixture
+def mock_user_no_roles() -> dict:
+    return {"username": "test", "roles": []}
+
+
+@pytest.fixture
+def override_user_dependency():
     from src import main
-    main.app.dependency_overrides[get_current_user] = lambda: mock_admin_user
-    yield
+
+    def _override(user: dict):
+        main.app.dependency_overrides[get_current_user] = lambda: user
+
+    yield _override
     main.app.dependency_overrides = {}
